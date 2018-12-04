@@ -1,0 +1,144 @@
+from urllib.request import urlopen
+import urllib.request
+import urllib.response
+import urllib.parse
+from bs4 import BeautifulSoup
+
+
+links=["https://www.1mg.com/drugs/ecosprin-75-tablet-40765" ,"https://www.1mg.com/drugs/delisprin-75-tablet-40766"]
+
+for link in links :
+     page=urlopen(link)
+
+     file=open("1mg.txt","w")
+
+     soup=BeautifulSoup(page ,features="html.parser")
+
+     # # # print(soup.prettify())
+     print(soup.title.string) 
+     file.write(soup.title.string)
+
+
+     prescription=soup.find('div',class_="DrugHeader__prescription-req___34WVy")
+     print(prescription.span.string)
+     file.write(prescription.span.string)
+
+     manufacturer=soup.find('div',class_="DrugHeader__meta___B3BcU")
+     for u in manufacturer:
+          print(u.string)
+          if u != None:
+               file.write(u.string)
+     
+
+
+     company=soup.find('div',class_="DrugHeader__meta-title___22zXC")
+     for u in company:
+          print(u.string) 
+     file.write(u.string)
+
+
+
+     csalt=soup.find('div',id="overview")
+     for u in csalt:
+          print(u.string)
+          if u.string!= None:
+               file.write(u.string) 
+
+     salt=soup.find('div',class_="saltInfo DrugHeader__meta-value___vqYM0")
+     for u in salt:
+          print(u.string) 
+     file.write(u.string)
+
+
+
+     howuse=soup.find_all('div',class_="DrugOverview__container___CqA8x")
+     for u in howuse:
+          print(u.h2.string)
+          print(u.div.string)
+          if u.string!= None:
+               file.write(u.div.string)
+
+     warn=soup.find_all('div',class_="DrugOverview__warning-top___UD3xX")
+     for u in warn:
+          print(u.span.string)
+          if u.string!= None:
+            file.write(u.span.string)
+
+
+     warncontent=soup.find_all('div',class_="DrugOverview__content___22ZBX")
+     for u in warncontent:
+          print(u.string)
+          if u.string!= None:
+               file.write(u.string)
+
+
+     alternate=soup.find_all('div',id="substitutes")
+     for u in alternate:
+          print(u.div.string)
+          if u.string!= None:
+               file.write(u.div.string)
+
+     expertadvice=soup.find_all('div',{'class':"ExpertAdviceItem__content___1Djk2"})
+     for u in expertadvice:
+          l=u.find_all('li')
+          for data in l:
+               print(data.string)
+               if u.string!= None:
+                    file.write(data.string)
+          
+
+     quesreltomed=soup.find_all('div',{'id':"patient_concerns"})
+     for u in quesreltomed:
+          l=u.find_all('div')
+          for data in l:
+               
+               print(data.string)
+               if u.string!= None:
+                    file.write(data.string)
+          #  print(data.h2.string)
+
+
+
+     feedback=soup.find_all('div',{'id':"user_feedback"})
+     for u in feedback:
+          l=u.find_all('div')
+          for data in l:
+               print(data.string)
+               if u.string!= None:
+                    file.write(data.string)
+          
+          
+     faq=soup.find_all('div',{'class':"Faqs__tile___1B58W"})
+     for u in faq:
+          l=u.find_all('div')
+          for data in l:
+                    print(data.string)
+                    if u.string!= None:
+                         file.write(data.string)
+               
+          
+     
+
+     
+
+
+
+
+
+
+
+     file.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
